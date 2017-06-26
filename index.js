@@ -61,98 +61,98 @@
     }
   }
 
+  function errorSubclass(fn) {
+    fn.prototype = new Error()
+    fn.prototype.constructor = fn
+  }
+
+  function ImageWithoutAltAttributeError(element) {
+    this.name = 'ImageWithoutAltAttributeError'
+    this.stack = new Error().stack
+    this.element = element
+    this.message = `Missing alt attribute on ${element.outerHTML}`
+  }
+  errorSubclass(ImageWithoutAltAttributeError)
+
+  function ElementWithoutLabelError(element) {
+    this.name = 'ElementWithoutLabelError'
+    this.stack = new Error().stack
+    this.element = element
+    this.message = `Missing text, title, or aria-label attribute on ${element.outerHTML}`
+  }
+  errorSubclass(ElementWithoutLabelError)
+
+  function LinkWithoutLabelOrRoleError(element) {
+    this.name = 'LinkWithoutLabelOrRoleError'
+    this.stack = new Error().stack
+    this.element = element
+    this.message = `Missing href or role=button on ${element.outerHTML}`
+  }
+  errorSubclass(LinkWithoutLabelOrRoleError)
+
+  function LabelMissingControl(element) {
+    this.name = 'LabelMissingControl'
+    this.stack = new Error().stack
+    this.element = element
+    this.message = `Label missing control on ${element.outerHTML}`
+  }
+  errorSubclass(LabelMissingControl)
+
+  function ButtonWithoutLabelError(element) {
+    this.name = 'ButtonWithoutLabelError'
+    this.stack = new Error().stack
+    this.element = element
+    this.message = `Missing text or aria-label attribute on ${element.outerHTML}`
+  }
+  errorSubclass(ButtonWithoutLabelError)
+
+  function ARIAAttributeMissingError(element, attr) {
+    this.name = 'ARIAAttributeMissingError'
+    this.stack = new Error().stack
+    this.element = element
+    this.message = `Missing ${attr} attribute on ${element.outerHTML}`
+  }
+  errorSubclass(ARIAAttributeMissingError)
+
+  const SelectorARIAPairs = {
+    ".js-menu-target": ["aria-expanded", "aria-haspopup"],
+    ".js-details-target": ["aria-expanded"]
+  }
+
+  function elementIsHidden(element) {
+    return element.getAttribute('aria-hidden') === 'true' || element.closest('[aria-hidden="true"]')
+  }
+
+  function isText(value) {
+    return typeof value === 'string' && !!value.trim()
+  }
+
+  // Public: Check if an element has text visible by sight or screen reader.
+  //
+  // Examples
+  //
+  //   <img alt="github" src="github.png">
+  //   # => true
+  //
+  //   <span aria-label="Open"></span>
+  //   # => true
+  //
+  //   <button></button>
+  //   # => false
+  //
+  // Returns String text.
+  function accessibleText(node) {
+    switch (node.nodeType) {
+      case Node.ELEMENT_NODE:
+        if (isText(node.getAttribute('alt')) || isText(node.getAttribute('aria-label')) || isText(node.getAttribute('title'))) return true
+        for (const child of node.childNodes) {
+          if (accessibleText(child)) return true
+        }
+        break
+      case Node.TEXT_NODE:
+        return isText(node.data)
+    }
+  }
+
   return scanForProblems
 }));
-
-function errorSubclass(fn) {
-  fn.prototype = new Error()
-  fn.prototype.constructor = fn
-}
-
-function ImageWithoutAltAttributeError(element) {
-  this.name = 'ImageWithoutAltAttributeError'
-  this.stack = new Error().stack
-  this.element = element
-  this.message = `Missing alt attribute on ${element.outerHTML}`
-}
-errorSubclass(ImageWithoutAltAttributeError)
-
-function ElementWithoutLabelError(element) {
-  this.name = 'ElementWithoutLabelError'
-  this.stack = new Error().stack
-  this.element = element
-  this.message = `Missing text, title, or aria-label attribute on ${element.outerHTML}`
-}
-errorSubclass(ElementWithoutLabelError)
-
-function LinkWithoutLabelOrRoleError(element) {
-  this.name = 'LinkWithoutLabelOrRoleError'
-  this.stack = new Error().stack
-  this.element = element
-  this.message = `Missing href or role=button on ${element.outerHTML}`
-}
-errorSubclass(LinkWithoutLabelOrRoleError)
-
-function LabelMissingControl(element) {
-  this.name = 'LabelMissingControl'
-  this.stack = new Error().stack
-  this.element = element
-  this.message = `Label missing control on ${element.outerHTML}`
-}
-errorSubclass(LabelMissingControl)
-
-function ButtonWithoutLabelError(element) {
-  this.name = 'ButtonWithoutLabelError'
-  this.stack = new Error().stack
-  this.element = element
-  this.message = `Missing text or aria-label attribute on ${element.outerHTML}`
-}
-errorSubclass(ButtonWithoutLabelError)
-
-function ARIAAttributeMissingError(element, attr) {
-  this.name = 'ARIAAttributeMissingError'
-  this.stack = new Error().stack
-  this.element = element
-  this.message = `Missing ${attr} attribute on ${element.outerHTML}`
-}
-errorSubclass(ARIAAttributeMissingError)
-
-const SelectorARIAPairs = {
-  ".js-menu-target": ["aria-expanded", "aria-haspopup"],
-  ".js-details-target": ["aria-expanded"]
-}
-
-function elementIsHidden(element) {
-  return element.getAttribute('aria-hidden') === 'true' || element.closest('[aria-hidden="true"]')
-}
-
-function isText(value) {
-  return typeof value === 'string' && !!value.trim()
-}
-
-// Public: Check if an element has text visible by sight or screen reader.
-//
-// Examples
-//
-//   <img alt="github" src="github.png">
-//   # => true
-//
-//   <span aria-label="Open"></span>
-//   # => true
-//
-//   <button></button>
-//   # => false
-//
-// Returns String text.
-function accessibleText(node) {
-  switch (node.nodeType) {
-    case Node.ELEMENT_NODE:
-      if (isText(node.getAttribute('alt')) || isText(node.getAttribute('aria-label')) || isText(node.getAttribute('title'))) return true
-      for (const child of node.childNodes) {
-        if (accessibleText(child)) return true
-      }
-      break
-    case Node.TEXT_NODE:
-      return isText(node.data)
-  }
-}
