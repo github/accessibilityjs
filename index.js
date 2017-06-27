@@ -56,9 +56,7 @@
       }
     }
 
-    var ariaRequiredElements = Object.keys(SelectorARIAPairs)
-    for (i = 0; i < ariaRequiredElements.length; i++) {
-      var selector = selectorElements[i]
+    for (var selector in SelectorARIAPairs) {
       var ARIAAttrsRequired = SelectorARIAPairs[selector]
       var targetElements = context.querySelectorAll(selector)
 
