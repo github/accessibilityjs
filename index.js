@@ -162,7 +162,7 @@
     switch (node.nodeType) {
       case Node.ELEMENT_NODE:
         if (isText(node.getAttribute('alt')) || isText(node.getAttribute('aria-label')) || isText(node.getAttribute('title'))) return true
-        for (i = 0; i < node.childNodes.length; i++) {
+        for (var i = 0; i < node.childNodes.length; i++) {
           if (accessibleText(node.childNodes[i])) return true
         }
         break
