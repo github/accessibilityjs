@@ -87,7 +87,7 @@
     this.name = 'ImageWithoutAltAttributeError'
     this.stack = new Error().stack
     this.element = element
-    this.message = `Missing alt attribute on ${element.outerHTML}`
+    this.message = 'Missing alt attribute on ' + element.outerHTML
   }
   errorSubclass(ImageWithoutAltAttributeError)
 
@@ -95,7 +95,7 @@
     this.name = 'ElementWithoutLabelError'
     this.stack = new Error().stack
     this.element = element
-    this.message = `Missing text, title, or aria-label attribute on ${element.outerHTML}`
+    this.message = 'Missing text, title, or aria-label attribute on ' + element.outerHTML
   }
   errorSubclass(ElementWithoutLabelError)
 
@@ -103,7 +103,7 @@
     this.name = 'LinkWithoutLabelOrRoleError'
     this.stack = new Error().stack
     this.element = element
-    this.message = `Missing href or role=button on ${element.outerHTML}`
+    this.message = 'Missing href or role=button on ' + element.outerHTML
   }
   errorSubclass(LinkWithoutLabelOrRoleError)
 
@@ -111,7 +111,7 @@
     this.name = 'LabelMissingControl'
     this.stack = new Error().stack
     this.element = element
-    this.message = `Label missing control on ${element.outerHTML}`
+    this.message = 'Label missing control on ' + element.outerHTML
   }
   errorSubclass(LabelMissingControl)
 
@@ -119,7 +119,7 @@
     this.name = 'ButtonWithoutLabelError'
     this.stack = new Error().stack
     this.element = element
-    this.message = `Missing text or aria-label attribute on ${element.outerHTML}`
+    this.message = 'Missing text or aria-label attribute on ' + element.outerHTML
   }
   errorSubclass(ButtonWithoutLabelError)
 
@@ -127,7 +127,7 @@
     this.name = 'ARIAAttributeMissingError'
     this.stack = new Error().stack
     this.element = element
-    this.message = `Missing ${attr} attribute on ${element.outerHTML}`
+    this.message = 'Missing '+attr+' attribute on ' + element.outerHTML
   }
   errorSubclass(ARIAAttributeMissingError)
 
