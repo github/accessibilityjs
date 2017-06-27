@@ -56,17 +56,17 @@
       }
     }
 
-    var selectorElements = Object.keys(SelectorARIAPairs)
-    for (i = 0; i < selectorElements.length; i++) {
+    var ariaRequiredElements = Object.keys(SelectorARIAPairs)
+    for (i = 0; i < ariaRequiredElements.length; i++) {
       var selector = selectorElements[i]
       var ARIAAttrsRequired = SelectorARIAPairs[selector]
       var targetElements = context.querySelectorAll(selector)
 
-      for (var j = 0; i < targetElements.length; j++) {
+      for (var j = 0; j < targetElements.length; j++) {
         var target = targetElements[j]
         var missingAttrs = []
 
-        for (var k = 0; attr < ARIAAttrsRequired.length; k++) {
+        for (var k = 0; k < ARIAAttrsRequired.length; k++) {
           var attr = ARIAAttrsRequired[k]
           if (!target.hasAttribute(attr)) missingAttrs.push(attr)
         }
