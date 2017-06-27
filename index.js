@@ -4,7 +4,7 @@
   } else if (typeof exports === 'object') {
     module.exports = factory();
   } else {
-    root.invariant = factory();
+    root.scanForProblems = factory();
   }
 }(this, function() {
   const scanForProblems = function (context, logError) {
