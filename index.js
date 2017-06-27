@@ -1,20 +1,24 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
   } else {
     root.scanForProblems = factory();
   }
 }(this, function() {
-  const scanForProblems = function (context, logError) {
-    for (const img of context.querySelectorAll('img')) {
+  function scanForProblems(context, logError) {
+    var i
+
+    var imgElements = context.querySelectorAll('img')
+    for (i = 0; i < imgElements.length; i++) {
+      var img = imgElements[i]
       if (!img.hasAttribute('alt')) {
         logError(new ImageWithoutAltAttributeError(img))
       }
     }
 
-    for (const a of context.querySelectorAll('a')) {
+    var aElements = context.querySelectorAll('a')
+    for (i = 0; i < aElements.length; i++) {
+      var a = aElements[i]
       if (a.hasAttribute('name') || elementIsHidden(a)) {
         continue
       }
@@ -25,32 +29,45 @@
       }
     }
 
-    for (const button of context.querySelectorAll('button')) {
+    var buttonElements = context.querySelectorAll('button')
+    for (i = 0; i < buttonElements.length; i++) {
+      var button = buttonElements[i]
       if (!elementIsHidden(button) && !accessibleText(button)) {
         logError(new ButtonWithoutLabelError(button))
       }
     }
 
-    for (const label of context.querySelectorAll('label')) {
+    var labelElements = context.querySelectorAll('label')
+    for (i = 0; i < labelElements.length; i++) {
+      var label = labelElements[i]
       // In case label.control isn't supported by browser, find the control manually (IE)
-      const control = label.control || document.getElementById(label.getAttribute('for')) || label.querySelector('input')
+      var control = label.control || document.getElementById(label.getAttribute('for')) || label.querySelector('input')
 
       if (!control) {
         logError(new LabelMissingControl(label), false)
       }
     }
 
-    for (const input of context.querySelectorAll('input[type=text], textarea')) {
+    var inputElements = context.querySelectorAll('input[type=text], textarea')
+    for (i = 0; i < inputElements.length; i++) {
+      var input = inputElements[i]
       if (input.labels && !input.labels.length && !elementIsHidden(input) && !input.hasAttribute('aria-label')) {
         logError(new ElementWithoutLabelError(input))
       }
     }
 
-    for (const selector of Object.keys(SelectorARIAPairs)) {
-      const ARIAAttrsRequired = SelectorARIAPairs[selector]
-      for (const target of context.querySelectorAll(selector)) {
-        const missingAttrs = []
-        for (const attr of ARIAAttrsRequired) {
+    var selectorElements = Object.keys(SelectorARIAPairs)
+    for (i = 0; i < selectorElements.length; i++) {
+      var selector = selectorElements[i]
+      var ARIAAttrsRequired = SelectorARIAPairs[selector]
+      var targetElements = context.querySelectorAll(selector)
+
+      for (var j = 0; i < targetElements.length; j++) {
+        var target = targetElements[j]
+        var missingAttrs = []
+
+        for (var k = 0; attr < ARIAAttrsRequired.length; k++) {
+          var attr = ARIAAttrsRequired[k]
           if (!target.hasAttribute(attr)) missingAttrs.push(attr)
         }
 
@@ -63,7 +80,7 @@
 
   function errorSubclass(fn) {
     fn.prototype = new Error()
-    fn.prototype.constructor = fn
+    fn.prototype.varructor = fn
   }
 
   function ImageWithoutAltAttributeError(element) {
@@ -114,7 +131,7 @@
   }
   errorSubclass(ARIAAttributeMissingError)
 
-  const SelectorARIAPairs = {
+  var SelectorARIAPairs = {
     ".js-menu-target": ["aria-expanded", "aria-haspopup"],
     ".js-details-target": ["aria-expanded"]
   }
@@ -145,8 +162,8 @@
     switch (node.nodeType) {
       case Node.ELEMENT_NODE:
         if (isText(node.getAttribute('alt')) || isText(node.getAttribute('aria-label')) || isText(node.getAttribute('title'))) return true
-        for (const child of node.childNodes) {
-          if (accessibleText(child)) return true
+        for (i = 0; i < node.childNodes.length; i++) {
+          if (accessibleText(node.childNodes[i])) return true
         }
         break
       case Node.TEXT_NODE:
