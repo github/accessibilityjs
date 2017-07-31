@@ -85,7 +85,7 @@
     this.name = 'ImageWithoutAltAttributeError'
     this.stack = new Error().stack
     this.element = element
-    this.message = 'Missing alt attribute on ' + element.outerHTML
+    this.message = 'Missing alt attribute on ' + inspect(element)
   }
   errorSubclass(ImageWithoutAltAttributeError)
 
@@ -93,7 +93,7 @@
     this.name = 'ElementWithoutLabelError'
     this.stack = new Error().stack
     this.element = element
-    this.message = 'Missing text, title, or aria-label attribute on ' + element.outerHTML
+    this.message = 'Missing text, title, or aria-label attribute on ' + inspect(element)
   }
   errorSubclass(ElementWithoutLabelError)
 
@@ -101,7 +101,7 @@
     this.name = 'LinkWithoutLabelOrRoleError'
     this.stack = new Error().stack
     this.element = element
-    this.message = 'Missing href or role=button on ' + element.outerHTML
+    this.message = 'Missing href or role=button on ' + inspect(element)
   }
   errorSubclass(LinkWithoutLabelOrRoleError)
 
@@ -109,7 +109,7 @@
     this.name = 'LabelMissingControl'
     this.stack = new Error().stack
     this.element = element
-    this.message = 'Label missing control on ' + element.outerHTML
+    this.message = 'Label missing control on ' + inspect(element)
   }
   errorSubclass(LabelMissingControl)
 
@@ -117,7 +117,7 @@
     this.name = 'ButtonWithoutLabelError'
     this.stack = new Error().stack
     this.element = element
-    this.message = 'Missing text or aria-label attribute on ' + element.outerHTML
+    this.message = 'Missing text or aria-label attribute on ' + inspect(element)
   }
   errorSubclass(ButtonWithoutLabelError)
 
@@ -125,7 +125,7 @@
     this.name = 'ARIAAttributeMissingError'
     this.stack = new Error().stack
     this.element = element
-    this.message = 'Missing '+attr+' attribute on ' + element.outerHTML
+    this.message = 'Missing '+attr+' attribute on ' + inspect(element)
   }
   errorSubclass(ARIAAttributeMissingError)
 
@@ -167,6 +167,31 @@
       case Node.TEXT_NODE:
         return isText(node.data)
     }
+  }
+
+  function inspect(element) {
+    var tagHTML = element.outerHTML
+    if (element.innerHTML) tagHTML = tagHTML.replace(element.innerHTML, '...')
+
+    var parents = []
+    while (element) {
+      if (element.nodeName === 'BODY')break
+      parents.push(selectors(element))
+      element = element.parentNode
+    }
+    return '"' + parents.reverse().join(' > ') + '". \n\n' + tagHTML
+  }
+
+  function selectors(element) {
+    var componenets = [element.nodeName.toLowerCase()]
+    if (element.id) componenets.push('#' + element.id)
+    if (element.classList) {
+      element.classList.forEach(function(name) {
+        if (name.match(/^js-/)) componenets.push('.' + name)
+      })
+    }
+
+    return componenets.join('')
   }
 
   return scanForProblems
