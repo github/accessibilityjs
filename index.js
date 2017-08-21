@@ -175,8 +175,10 @@
 
     var parents = []
     while (element) {
-      if (element.nodeName === 'BODY')break
+      if (element.nodeName === 'BODY') break
       parents.push(selectors(element))
+      // Stop traversing when we hit an ID
+      if (element.id) break
       element = element.parentNode
     }
     return '"' + parents.reverse().join(' > ') + '". \n\n' + tagHTML
