@@ -42,7 +42,7 @@
       // In case label.control isn't supported by browser, find the control manually (IE)
       var control = label.control || document.getElementById(label.getAttribute('for')) || label.querySelector('input')
 
-      if (!control) {
+      if (!control && !elementIsHidden(label)) {
         logError(new LabelMissingControl(label), false)
       }
     }
@@ -134,7 +134,11 @@
   }
 
   function elementIsHidden(element) {
-    return element.getAttribute('aria-hidden') === 'true' || element.closest('[aria-hidden="true"]')
+    if (element.getAttribute('aria-hidden') === 'true') return true
+    if (element.closest('[aria-hidden="true"]')) return true
+    if (element.closest('[hidden]')) return true
+    if (element.closest('[style="display: none"]')) return true
+    return false
   }
 
   function isText(value) {
