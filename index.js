@@ -134,11 +134,7 @@
   }
 
   function elementIsHidden(element) {
-    if (element.getAttribute('aria-hidden') === 'true') return true
-    if (element.closest('[aria-hidden="true"]')) return true
-    if (element.closest('[hidden]')) return true
-    if (element.closest('[style="display: none"]')) return true
-    return false
+    return element.closest('[aria-hidden="true"], [hidden], [style="display: none"]') != null
   }
 
   function isText(value) {
