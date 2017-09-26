@@ -1,8 +1,12 @@
-{ "extends": "eslint:recommended",
+{
+  "extends": "eslint:recommended",
   "env": {
     "browser": true,
     "amd": true
   },
+  "plugins": [
+    "mysticatea"
+  ],
   "rules": {
     "eqeqeq": ["error", "smart"],
     "no-eval": "error",
@@ -10,6 +14,8 @@
     "no-implicit-globals": "error",
     "no-trailing-spaces": "error",
     "no-unused-expressions": "error",
-    "semi": ["error", "never"]
+    "semi": ["error", "never"],
+    "mysticatea/block-scoped-var": "error",
+    "no-redeclare": "off"
   }
 }
