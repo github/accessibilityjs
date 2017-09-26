@@ -189,12 +189,31 @@
     var componenets = [element.nodeName.toLowerCase()]
     if (element.id) componenets.push('#' + element.id)
     if (element.classList) {
-      element.classList.forEach(function(name) {
+      for (var i = 0; i < element.classList.length; i++) {
+        var name = element.classList[i]
         if (name.match(/^js-/)) componenets.push('.' + name)
-      })
+      }
     }
 
     return componenets.join('')
+  }
+
+  // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
+  if (!Element.prototype.matches) {
+    Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector
+  }
+
+  if (!Element.prototype.closest) {
+    Element.prototype.closest = function(s) {
+      var el = this
+      var ancestor = this
+      if (!document.documentElement.contains(el)) return null
+      while (ancestor !== null) {
+        if (ancestor.matches(s)) return ancestor
+        ancestor = ancestor.parentElement
+      }
+      return null
+    }
   }
 
   return scanForProblems
