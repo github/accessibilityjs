@@ -188,9 +188,10 @@
     var componenets = [element.nodeName.toLowerCase()]
     if (element.id) componenets.push('#' + element.id)
     if (element.classList) {
-      element.classList.forEach(function(name) {
+      for (var i = 0; i < element.classList.length; i++) {
+        var name = element.classList[i]
         if (name.match(/^js-/)) componenets.push('.' + name)
-      })
+      }
     }
 
     return componenets.join('')
