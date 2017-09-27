@@ -134,7 +134,7 @@
   }
 
   function elementIsHidden(element) {
-    return element.closest('[aria-hidden="true"], [hidden], [style="display: none"]') != null
+    return element.closest('[aria-hidden="true"], [hidden], [style*="display: none"]') != null
   }
 
   function isText(value) {
