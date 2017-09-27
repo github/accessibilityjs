@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/github/accessibilityjs#readme",
   "devDependencies": {
-    "eslint": "^3.19.0"
+    "eslint": "^3.19.0",
+    "eslint-plugin-mysticatea": "^4.2.2"
   }
 }
