@@ -6,9 +6,10 @@
   }
 }(this, function() {
   function scanForProblems(context, logError) {
-
+    var i
     var imgElements = context.querySelectorAll('img')
-    for (var i = 0; i < imgElements.length; i++) {
+
+    for (i = 0; i < imgElements.length; i++) {
       var img = imgElements[i]
       if (!img.hasAttribute('alt')) {
         logError(new ImageWithoutAltAttributeError(img))
@@ -16,7 +17,7 @@
     }
 
     var aElements = context.querySelectorAll('a')
-    for (var i = 0; i < aElements.length; i++) {
+    for (i = 0; i < aElements.length; i++) {
       var a = aElements[i]
       if (a.hasAttribute('name') || elementIsHidden(a)) {
         continue
@@ -29,7 +30,7 @@
     }
 
     var buttonElements = context.querySelectorAll('button')
-    for (var i = 0; i < buttonElements.length; i++) {
+    for (i = 0; i < buttonElements.length; i++) {
       var button = buttonElements[i]
       if (!elementIsHidden(button) && !accessibleText(button)) {
         logError(new ButtonWithoutLabelError(button))
@@ -37,7 +38,7 @@
     }
 
     var labelElements = context.querySelectorAll('label')
-    for (var i = 0; i < labelElements.length; i++) {
+    for (i = 0; i < labelElements.length; i++) {
       var label = labelElements[i]
       // In case label.control isn't supported by browser, find the control manually (IE)
       var control = label.control || document.getElementById(label.getAttribute('for')) || label.querySelector('input')
@@ -48,7 +49,7 @@
     }
 
     var inputElements = context.querySelectorAll('input[type=text], textarea')
-    for (var i = 0; i < inputElements.length; i++) {
+    for (i = 0; i < inputElements.length; i++) {
       var input = inputElements[i]
       if (input.labels && !input.labels.length && !elementIsHidden(input) && !input.hasAttribute('aria-label')) {
         logError(new ElementWithoutLabelError(input))
