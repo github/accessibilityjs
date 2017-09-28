@@ -51,7 +51,9 @@
     var inputElements = context.querySelectorAll('input[type=text], textarea')
     for (i = 0; i < inputElements.length; i++) {
       var input = inputElements[i]
-      if (input.labels && !input.labels.length && !elementIsHidden(input) && !input.hasAttribute('aria-label')) {
+      // In case input.labels isn't supported by browser, find the control manually (IE)
+      var inputLabel = input.labels ? input.labels[0] : input.closest('label') || document.querySelector('label[for="' + input.id + '"]')
+      if (!inputLabel && !elementIsHidden(input) && !input.hasAttribute('aria-label')) {
         logError(new ElementWithoutLabelError(input))
       }
     }
@@ -188,9 +190,10 @@
     var componenets = [element.nodeName.toLowerCase()]
     if (element.id) componenets.push('#' + element.id)
     if (element.classList) {
-      element.classList.forEach(function(name) {
+      for (var i = 0; i < element.classList.length; i++) {
+        var name = element.classList[i]
         if (name.match(/^js-/)) componenets.push('.' + name)
-      })
+      }
     }
 
     return componenets.join('')
