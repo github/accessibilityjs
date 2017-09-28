@@ -24,8 +24,8 @@ document.addEventListener('ready', function() {
 
 - Chrome
 - Firefox
-- Safari
-- Internet Explorer 11+
+- Safari 6+
+- Internet Explorer 9+
 - Microsoft Edge
 
 Internet Explorer and Edge require a polyfill for [`closest`](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill).
