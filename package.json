@@ -2,8 +2,11 @@
   "name": "accessibilityjs",
   "version": "1.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index-umd.js",
+  "module": "dist/index-esm.js",
   "scripts": {
+    "prebuild": "npm run clean && mkdir dist",
+    "clean": "rm -rf dist",
     "test": "eslint *.js",
     "build": "npm run build-esm && npm run build-umd",
     "build-esm": "BABEL_ENV=esm babel index.js -o dist/index-esm.js",

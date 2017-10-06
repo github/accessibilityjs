@@ -1,4 +1,5 @@
-{ "extends": "eslint:recommended",
+{
+  "extends": "eslint:recommended",
   "env": {
     "browser": true,
     "amd": true
@@ -11,5 +12,9 @@
     "no-trailing-spaces": "error",
     "no-unused-expressions": "error",
     "semi": ["error", "never"]
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module"
   }
 }
