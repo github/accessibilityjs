@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/github/accessibilityjs#readme",
   "devDependencies": {
-    "eslint": "^3.19.0"
+    "eslint": "^4.8.0"
   }
 }
