@@ -1,16 +1,11 @@
 export function scanForProblems(context, logError) {
-  var imgElements = context.querySelectorAll('img')
-
-  for (let i = 0; i < imgElements.length; i++) {
-    var img = imgElements[i]
+  for (const img of context.querySelectorAll('img')) {
     if (!img.hasAttribute('alt')) {
       logError(new ImageWithoutAltAttributeError(img))
     }
   }
 
-  var aElements = context.querySelectorAll('a')
-  for (let i = 0; i < aElements.length; i++) {
-    var a = aElements[i]
+  for (const a of context.querySelectorAll('a')) {
     if (a.hasAttribute('name') || elementIsHidden(a)) {
       continue
     }
@@ -21,17 +16,13 @@ export function scanForProblems(context, logError) {
     }
   }
 
-  var buttonElements = context.querySelectorAll('button')
-  for (let i = 0; i < buttonElements.length; i++) {
-    var button = buttonElements[i]
+  for (const button of context.querySelectorAll('button')) {
     if (!elementIsHidden(button) && !accessibleText(button)) {
       logError(new ButtonWithoutLabelError(button))
     }
   }
 
-  var labelElements = context.querySelectorAll('label')
-  for (let i = 0; i < labelElements.length; i++) {
-    var label = labelElements[i]
+  for (const label of context.querySelectorAll('label')) {
     // In case label.control isn't supported by browser, find the control manually (IE)
     var control = label.control || document.getElementById(label.getAttribute('for')) || label.querySelector('input')
 
@@ -40,11 +31,9 @@ export function scanForProblems(context, logError) {
     }
   }
 
-  var inputElements = context.querySelectorAll('input[type=text], textarea')
-  for (let i = 0; i < inputElements.length; i++) {
-    var input = inputElements[i]
+  for (const input of context.querySelectorAll('input[type=text], textarea')) {
     // In case input.labels isn't supported by browser, find the control manually (IE)
-    var inputLabel = input.labels ? input.labels[0] : input.closest('label') || document.querySelector('label[for="' + input.id + '"]')
+    var inputLabel = input.labels ? input.labels[0] : input.closest('label') || document.querySelector(`label[for="${input.id}"]`)
     if (!inputLabel && !elementIsHidden(input) && !input.hasAttribute('aria-label')) {
       logError(new ElementWithoutLabelError(input))
     }
@@ -52,14 +41,10 @@ export function scanForProblems(context, logError) {
 
   for (var selector in SelectorARIAPairs) {
     var ARIAAttrsRequired = SelectorARIAPairs[selector]
-    var targetElements = context.querySelectorAll(selector)
-
-    for (var j = 0; j < targetElements.length; j++) {
-      var target = targetElements[j]
+    for (const target of context.querySelectorAll(selector)) {
       var missingAttrs = []
 
-      for (var k = 0; k < ARIAAttrsRequired.length; k++) {
-        var attr = ARIAAttrsRequired[k]
+      for (const attr of ARIAAttrsRequired) {
         if (!target.hasAttribute(attr)) missingAttrs.push(attr)
       }
 
@@ -79,7 +64,7 @@ function ImageWithoutAltAttributeError(element) {
   this.name = 'ImageWithoutAltAttributeError'
   this.stack = new Error().stack
   this.element = element
-  this.message = 'Missing alt attribute on ' + inspect(element)
+  this.message = `Missing alt attribute on ${inspect(element)}`
 }
 errorSubclass(ImageWithoutAltAttributeError)
 
@@ -87,7 +72,7 @@ function ElementWithoutLabelError(element) {
   this.name = 'ElementWithoutLabelError'
   this.stack = new Error().stack
   this.element = element
-  this.message = 'Missing text, title, or aria-label attribute on ' + inspect(element)
+  this.message = `Missing text, title, or aria-label attribute on ${inspect(element)}`
 }
 errorSubclass(ElementWithoutLabelError)
 
@@ -95,7 +80,7 @@ function LinkWithoutLabelOrRoleError(element) {
   this.name = 'LinkWithoutLabelOrRoleError'
   this.stack = new Error().stack
   this.element = element
-  this.message = 'Missing href or role=button on ' + inspect(element)
+  this.message = `Missing href or role=button on ${inspect(element)}`
 }
 errorSubclass(LinkWithoutLabelOrRoleError)
 
@@ -103,7 +88,7 @@ function LabelMissingControl(element) {
   this.name = 'LabelMissingControl'
   this.stack = new Error().stack
   this.element = element
-  this.message = 'Label missing control on ' + inspect(element)
+  this.message = `Label missing control on ${inspect(element)}`
 }
 errorSubclass(LabelMissingControl)
 
@@ -111,7 +96,7 @@ function ButtonWithoutLabelError(element) {
   this.name = 'ButtonWithoutLabelError'
   this.stack = new Error().stack
   this.element = element
-  this.message = 'Missing text or aria-label attribute on ' + inspect(element)
+  this.message = `Missing text or aria-label attribute on ${inspect(element)}`
 }
 errorSubclass(ButtonWithoutLabelError)
 
@@ -119,7 +104,7 @@ function ARIAAttributeMissingError(element, attr) {
   this.name = 'ARIAAttributeMissingError'
   this.stack = new Error().stack
   this.element = element
-  this.message = 'Missing '+attr+' attribute on ' + inspect(element)
+  this.message = `Missing '+attr+' attribute on ${inspect(element)}`
 }
 errorSubclass(ARIAAttributeMissingError)
 
@@ -175,16 +160,15 @@ function inspect(element) {
     if (element.id) break
     element = element.parentNode
   }
-  return '"' + parents.reverse().join(' > ') + '". \n\n' + tagHTML
+  return `"${parents.reverse().join(' > ')}". \n\n${tagHTML}`
 }
 
 function selectors(element) {
   var componenets = [element.nodeName.toLowerCase()]
-  if (element.id) componenets.push('#' + element.id)
+  if (element.id) componenets.push(`#${element.id}`)
   if (element.classList) {
-    for (var i = 0; i < element.classList.length; i++) {
-      var name = element.classList[i]
-      if (name.match(/^js-/)) componenets.push('.' + name)
+    for (const name of element.classList) {
+      if (name.match(/^js-/)) componenets.push(`'.${name}`)
     }
   }
 
