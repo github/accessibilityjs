@@ -104,7 +104,7 @@ function ARIAAttributeMissingError(element, attr) {
   this.name = 'ARIAAttributeMissingError'
   this.stack = new Error().stack
   this.element = element
-  this.message = `Missing '+attr+' attribute on ${inspect(element)}`
+  this.message = `Missing ${attr} attribute on ${inspect(element)}`
 }
 errorSubclass(ARIAAttributeMissingError)
 
