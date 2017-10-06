@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "eslint *.js",
-    "build": "BABEL_ENV=esm babel index.js -o dist/index-esm.js"
+    "build": "npm run build-esm && npm run build-umd",
+    "build-esm": "BABEL_ENV=esm babel index.js -o dist/index-esm.js",
+    "build-umd": "BABEL_ENV=umd babel index.js -o dist/index-umd.js"
   },
   "repository": {
     "type": "git",
