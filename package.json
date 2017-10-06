@@ -1,6 +1,6 @@
 {
   "name": "accessibilityjs",
-  "version": "1.0.1",
+  "version": "0.1.0",
   "description": "Client side accessibility error scanner.",
   "main": "dist/index-umd.js",
   "module": "dist/index-esm.js",
