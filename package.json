@@ -1,11 +1,13 @@
 {
   "name": "accessibilityjs",
   "version": "1.0.1",
-  "description": "",
+  "description": "Client side accessibility error scanner.",
   "main": "dist/index-umd.js",
   "module": "dist/index-esm.js",
+  "files": ["dist"],
   "scripts": {
     "prebuild": "npm run clean && mkdir dist",
+    "prepublishOnly": "npm run build",
     "clean": "rm -rf dist",
     "test": "eslint *.js",
     "build": "npm run build-esm && npm run build-umd",
@@ -16,7 +18,7 @@
     "type": "git",
     "url": "git+https://github.com/github/accessibilityjs.git"
   },
-  "keywords": [],
+  "keywords": ["accessibility", "a11y"],
   "author": "",
   "license": "MIT",
   "bugs": {
