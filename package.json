@@ -4,7 +4,9 @@
   "description": "Client side accessibility error scanner.",
   "main": "dist/index-umd.js",
   "module": "dist/index-esm.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "prebuild": "npm run clean && mkdir dist",
     "prepublishOnly": "npm run build",
@@ -18,7 +20,10 @@
     "type": "git",
     "url": "git+https://github.com/github/accessibilityjs.git"
   },
-  "keywords": ["accessibility", "a11y"],
+  "keywords": [
+    "accessibility",
+    "a11y"
+  ],
   "author": "GitHub, Inc.",
   "license": "MIT",
   "bugs": {
