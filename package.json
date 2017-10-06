@@ -19,7 +19,7 @@
     "url": "git+https://github.com/github/accessibilityjs.git"
   },
   "keywords": ["accessibility", "a11y"],
-  "author": "",
+  "author": "GitHub, Inc.",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/github/accessibilityjs/issues"
