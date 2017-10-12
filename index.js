@@ -24,7 +24,7 @@ export function scanForProblems(context, logError, options) {
 
   for (const label of context.querySelectorAll('label')) {
     // In case label.control isn't supported by browser, find the control manually (IE)
-    var control = label.control || document.getElementById(label.getAttribute('for')) || label.querySelector('input')
+    const control = label.control || document.getElementById(label.getAttribute('for')) || label.querySelector('input')
 
     if (!control && !elementIsHidden(label)) {
       logError(new LabelMissingControl(label))
@@ -33,7 +33,7 @@ export function scanForProblems(context, logError, options) {
 
   for (const input of context.querySelectorAll('input[type=text], textarea')) {
     // In case input.labels isn't supported by browser, find the control manually (IE)
-    var inputLabel = input.labels ? input.labels[0] : input.closest('label') || document.querySelector(`label[for="${input.id}"]`)
+    const inputLabel = input.labels ? input.labels[0] : input.closest('label') || document.querySelector(`label[for="${input.id}"]`)
     if (!inputLabel && !elementIsHidden(input) && !input.hasAttribute('aria-label')) {
       logError(new ElementWithoutLabelError(input))
     }
@@ -135,7 +135,7 @@ function accessibleText(node) {
   switch (node.nodeType) {
     case Node.ELEMENT_NODE:
       if (isText(node.getAttribute('alt')) || isText(node.getAttribute('aria-label')) || isText(node.getAttribute('title'))) return true
-      for (var i = 0; i < node.childNodes.length; i++) {
+      for (let i = 0; i < node.childNodes.length; i++) {
         if (accessibleText(node.childNodes[i])) return true
       }
       break
@@ -145,10 +145,10 @@ function accessibleText(node) {
 }
 
 function inspect(element) {
-  var tagHTML = element.outerHTML
+  let tagHTML = element.outerHTML
   if (element.innerHTML) tagHTML = tagHTML.replace(element.innerHTML, '...')
 
-  var parents = []
+  const parents = []
   while (element) {
     if (element.nodeName === 'BODY') break
     parents.push(selectors(element))
@@ -160,13 +160,13 @@ function inspect(element) {
 }
 
 function selectors(element) {
-  var componenets = [element.nodeName.toLowerCase()]
-  if (element.id) componenets.push(`#${element.id}`)
+  const components = [element.nodeName.toLowerCase()]
+  if (element.id) components.push(`#${element.id}`)
   if (element.classList) {
     for (const name of element.classList) {
-      if (name.match(/^js-/)) componenets.push(`.${name}`)
+      if (name.match(/^js-/)) components.push(`.${name}`)
     }
   }
 
-  return componenets.join('')
+  return components.join('')
 }
