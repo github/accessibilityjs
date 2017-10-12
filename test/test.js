@@ -1,12 +1,12 @@
-describe('Errors', () => {
-  it('empty button should be marked as error', () => {
+describe('scanForErrors should catch', () => {
+  it('empty button', () => {
     const button = makeElement('button', {"type": "button"})
     document.body.appendChild(button)
 
     assert.equal(button.getAttribute('data-error'), 'ButtonWithoutLabelError')
   })
 
-  it('button with image without alt should both be marked as error', () => {
+  it('button with image without alt', () => {
     const image = makeElement('img')
     const button = makeElement('button', {"type": "button"}, image)
     document.body.appendChild(button)
@@ -14,28 +14,28 @@ describe('Errors', () => {
     assert.equal(image.getAttribute('data-error'), 'ImageWithoutAltAttributeError')
   })
 
-  it('unlabeled input should be marked as error', () => {
+  it('unlabeled input', () => {
     const input = makeElement('input', {"type": "text"})
     document.body.appendChild(input)
 
     assert.equal(input.getAttribute('data-error'), 'ElementWithoutLabelError')
   })
 
-  it('a without href should be marked as error', () => {
+  it('a without href', () => {
     const a = makeElement('a', {}, 'home')
     document.body.appendChild(a)
 
     assert.equal(a.getAttribute('data-error'), 'LinkWithoutLabelOrRoleError')
   })
 
-  it('label without control should be marked as error', () => {
+  it('label without control', () => {
     const label = makeElement('label')
     document.body.appendChild(label)
 
     assert.equal(label.getAttribute('data-error'), 'LabelMissingControl')
   })
 
-  it('element with attributes missing should be marked as error', () => {
+  it('element with attributes missing', () => {
     const button = makeElement('button', {"type": "button", "class": "js-menu-target"}, "Button")
     document.body.appendChild(button)
 
@@ -43,8 +43,8 @@ describe('Errors', () => {
   })
 })
 
-describe('Non errors', () => {
-  it('button with image[alt] should be OK', () => {
+describe('scanForErrors should not catch', () => {
+  it('button with image[alt]', () => {
     const image = makeElement('img', {"alt": "button image"})
     const button = makeElement('button', {"type": "button"}, image)
     document.body.appendChild(button)
@@ -52,19 +52,19 @@ describe('Non errors', () => {
     assert.notOk(image.getAttribute('data-error'))
   })
 
-  it('input[aria-label] should be OK', () => {
+  it('input[aria-label]', () => {
     const input = makeElement('input', {"type": "text", "aria-label": "description"})
     document.body.appendChild(input)
     assert.notOk(input.getAttribute('data-error'))
   })
 
-  it('a with href should be OK', () => {
+  it('a with href', () => {
     const a = makeElement('a', {"href": "#anchor"}, "home")
     document.body.appendChild(a)
     assert.notOk(a.getAttribute('data-error'))
   })
 
-  it('label wrapping control should be OK', () => {
+  it('label wrapping control', () => {
     const label = makeElement('label', {}, 'description')
     const input = makeElement('input', {"type": "text"})
     label.append(input)
@@ -73,7 +73,7 @@ describe('Non errors', () => {
     assert.notOk(input.getAttribute('data-error'))
   })
 
-  it('label pairing with control should be OK', () => {
+  it('label pairing with control', () => {
     const container = makeElement('div')
     const label = makeElement('label', {"for": "input"}, 'description')
     const input = makeElement('input', {"id": "input", "type": "text"})
