@@ -11,7 +11,9 @@
     "no-implicit-globals": "error",
     "no-trailing-spaces": "error",
     "no-unused-expressions": "error",
-    "semi": ["error", "never"]
+    "semi": ["error", "never"],
+    "no-var": "error",
+    "prefer-const": "error"
   },
   "parser": "babel-eslint",
   "parserOptions": {
