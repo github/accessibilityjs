@@ -12,7 +12,7 @@
     "prepublishOnly": "npm run build",
     "clean": "rm -rf dist",
     "pretest": "eslint *.js && npm run build",
-    "test": "karma start --single-run --browsers ChromeHeadless ./test/karma.config.js",
+    "test": "karma start ./test/karma.config.js",
     "build": "npm run build-esm && npm run build-umd",
     "build-esm": "BABEL_ENV=esm babel index.js -o dist/index-esm.js",
     "build-umd": "BABEL_ENV=umd babel index.js -o dist/index-umd.js"
@@ -40,6 +40,7 @@
     "karma": "^1.7.1",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",
+    "karma-firefox-launcher": "^1.0.1",
     "karma-mocha": "^1.3.0",
     "mocha": "^4.0.1"
   }

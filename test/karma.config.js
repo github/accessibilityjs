@@ -6,8 +6,16 @@ module.exports = function(config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    browsers: ['ChromeHeadless'],
+    browsers: ['ChromeHeadless', 'FirefoxHeadless'],
     autoWatch: false,
-    concurrency: Infinity
+    singleRun: true,
+    concurrency: Infinity,
+    customLaunchers: {
+      FirefoxHeadless: {
+        base: 'Firefox',
+        flags: ['-headless'],
+        displayName: 'HeadlessFirefox'
+      },
+    }
   })
 }
