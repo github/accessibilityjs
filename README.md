@@ -5,7 +5,7 @@ Client side accessibility error scanner.
 ## Usage
 
 ```javascript
-import scanForProblems from 'accessibilityjs'
+import {scanForProblems} from 'accessibilityjs'
 
 function logError(error) {
   error.element.addEventListener('click', function () {
