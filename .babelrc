@@ -1,0 +1,22 @@
+{
+  "env": {
+    "esm": {
+      "presets": [
+        ["es2015", {"modules": false}]
+      ]
+    },
+    "umd": {
+      "plugins": [
+        ["transform-es2015-modules-umd", {
+          "globals": {
+            "index": "accessibilityjs"
+          },
+          "exactGlobals": true
+        }]
+      ],
+      "presets": [
+        ["es2015"]
+      ]
+    }
+  }
+}

@@ -22,7 +22,7 @@
         }
       }
     </script>
-    <script src="index.js" type="text/javascript"></script>
+    <script src="dist/index-umd.js" type="text/javascript"></script>
   </head>
   <body>
     <div class="wrapper js-pjax-container">
@@ -43,7 +43,7 @@
     </div>
 
     <script type="text/javascript">
-      scanForProblems(document.body, function (error) {
+      accessibilityjs.scanForProblems(document.body, function (error) {
         error.element.style.outline = '5px solid red'
         error.element.addEventListener('click', function () {
           alert([error.name, error.message].join('\n'))
