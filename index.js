@@ -27,7 +27,7 @@ export function scanForProblems(context, logError) {
     var control = label.control || document.getElementById(label.getAttribute('for')) || label.querySelector('input')
 
     if (!control && !elementIsHidden(label)) {
-      logError(new LabelMissingControl(label), false)
+      logError(new LabelMissingControl(label))
     }
   }
 
