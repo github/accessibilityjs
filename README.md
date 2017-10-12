@@ -20,6 +20,15 @@ document.addEventListener('ready', function() {
 })
 ```
 
+List of errors:
+
+- `ImageWithoutAltAttributeError`
+- `ElementWithoutLabelError`
+- `LinkWithoutLabelOrRoleError`
+- `LabelMissingControl`
+- `ButtonWithoutLabelError`
+- `ARIAAttributeMissingError`
+
 ## Browser support
 
 - Chrome
