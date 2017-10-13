@@ -1,4 +1,4 @@
-describe('scanForErrors should catch', () => {
+describe('scanForProblems should catch', () => {
   it('empty button', () => {
     const button = makeElement('button', {"type": "button"})
     document.body.appendChild(button)
@@ -43,7 +43,7 @@ describe('scanForErrors should catch', () => {
   })
 })
 
-describe('scanForErrors should not catch', () => {
+describe('scanForProblems should not catch', () => {
   it('button with image[alt]', () => {
     const image = makeElement('img', {"alt": "button image"})
     const button = makeElement('button', {"type": "button"}, image)
