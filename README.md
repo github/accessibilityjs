@@ -5,7 +5,7 @@ Client side accessibility error scanner.
 ## Install
 
 ```
-npm install @github/accessibilityjs --save
+npm install accessibilityjs --save
 ```
 
 ## Usage
