@@ -2,6 +2,12 @@
 
 Client side accessibility error scanner.
 
+## Install
+
+```
+npm install @github/accessibilityjs --save
+```
+
 ## Usage
 
 ```javascript
