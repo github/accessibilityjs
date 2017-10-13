@@ -24,7 +24,8 @@ List of errors:
 - `ImageWithoutAltAttributeError`
 - `ElementWithoutLabelError`
 - `LinkWithoutLabelOrRoleError`
-- `LabelMissingControl`
+- `LabelMissingControlError`
+- `InputMissingLabelError`
 - `ButtonWithoutLabelError`
 - `ARIAAttributeMissingError`
 

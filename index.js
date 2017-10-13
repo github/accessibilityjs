@@ -27,15 +27,15 @@ export function scanForProblems(context, logError, options) {
     const control = label.control || document.getElementById(label.getAttribute('for')) || label.querySelector('input')
 
     if (!control && !elementIsHidden(label)) {
-      logError(new LabelMissingControl(label))
+      logError(new LabelMissingControlError(label))
     }
   }
 
-  for (const input of context.querySelectorAll('input[type=text], textarea')) {
+  for (const input of context.querySelectorAll('input:not([type=button]), textarea')) {
     // In case input.labels isn't supported by browser, find the control manually (IE)
     const inputLabel = input.labels ? input.labels[0] : input.closest('label') || document.querySelector(`label[for="${input.id}"]`)
     if (!inputLabel && !elementIsHidden(input) && !input.hasAttribute('aria-label')) {
-      logError(new ElementWithoutLabelError(input))
+      logError(new InputMissingLabelError(input))
     }
   }
   if (options && options['ariaPairs']) {
@@ -85,13 +85,21 @@ function LinkWithoutLabelOrRoleError(element) {
 }
 errorSubclass(LinkWithoutLabelOrRoleError)
 
-function LabelMissingControl(element) {
-  this.name = 'LabelMissingControl'
+function LabelMissingControlError(element) {
+  this.name = 'LabelMissingControlError'
   this.stack = new Error().stack
   this.element = element
   this.message = `Label missing control on ${inspect(element)}`
 }
-errorSubclass(LabelMissingControl)
+errorSubclass(LabelMissingControlError)
+
+function InputMissingLabelError(element) {
+  this.name = 'InputMissingLabelError'
+  this.stack = new Error().stack
+  this.element = element
+  this.message = `Missing label for or aria-label attribute on ${inspect(element)}`
+}
+errorSubclass(InputMissingLabelError)
 
 function ButtonWithoutLabelError(element) {
   this.name = 'ButtonWithoutLabelError'

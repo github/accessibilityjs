@@ -18,7 +18,7 @@ describe('scanForProblems should catch', () => {
     const input = makeElement('input', {"type": "text"})
     document.body.appendChild(input)
 
-    assert.equal(input.getAttribute('data-error'), 'ElementWithoutLabelError')
+    assert.equal(input.getAttribute('data-error'), 'InputMissingLabelError')
   })
 
   it('a without href', () => {
@@ -32,7 +32,7 @@ describe('scanForProblems should catch', () => {
     const label = makeElement('label')
     document.body.appendChild(label)
 
-    assert.equal(label.getAttribute('data-error'), 'LabelMissingControl')
+    assert.equal(label.getAttribute('data-error'), 'LabelMissingControlError')
   })
 
   it('element with attributes missing', () => {
