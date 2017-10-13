@@ -88,7 +88,7 @@ describe('scanForErrors should not catch', () => {
 function makeElement(tag, attributes, content) {
   const element = document.createElement(tag)
   if (attributes) {
-    for(const attribute in attributes) {
+    for (const attribute in attributes) {
       element.setAttribute(attribute, attributes[attribute])
     }
   }
