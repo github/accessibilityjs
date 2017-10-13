@@ -8,11 +8,10 @@ Client side accessibility error scanner.
 import {scanForProblems} from 'accessibilityjs'
 
 function logError(error) {
+  error.element.classList.add('accessibility-error')
   error.element.addEventListener('click', function () {
     alert(`${error.name}\n\n${error.message}`)
   }, {once: true})
-
-  if (onPageWarning) error.element.classList.add('accessibility-error')
 }
 
 document.addEventListener('ready', function() {
@@ -49,4 +48,6 @@ Internet Explorer and Edge require a polyfill for [`closest`](https://developer.
 
 ## Development
 
-Test script changes with `test.html`.
+- `npm install`
+- `npm test`
+- `npm run example`

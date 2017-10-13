@@ -15,7 +15,9 @@
     "test": "karma start ./test/karma.config.js",
     "build": "npm run build-esm && npm run build-umd",
     "build-esm": "BABEL_ENV=esm babel index.js -o dist/index-esm.js",
-    "build-umd": "BABEL_ENV=umd babel index.js -o dist/index-umd.js"
+    "build-umd": "BABEL_ENV=umd babel index.js -o dist/index-umd.js",
+    "preexample": "npm run pretest",
+    "example": "open \"file://$(pwd)/example.html\""
   },
   "repository": {
     "type": "git",
