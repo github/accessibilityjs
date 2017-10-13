@@ -39,10 +39,10 @@ export function scanForProblems(context, logError, options) {
     }
   }
   if (options && options['ariaPairs']) {
-    for (var selector in options['ariaPairs']) {
-      var ARIAAttrsRequired =  options['ariaPairs'][selector]
+    for (const selector in options['ariaPairs']) {
+      const ARIAAttrsRequired =  options['ariaPairs'][selector]
       for (const target of context.querySelectorAll(selector)) {
-        var missingAttrs = []
+        const missingAttrs = []
 
         for (const attr of ARIAAttrsRequired) {
           if (!target.hasAttribute(attr)) missingAttrs.push(attr)
