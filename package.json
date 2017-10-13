@@ -1,5 +1,5 @@
 {
-  "name": "accessibilityjs",
+  "name": "@github/accessibilityjs",
   "version": "0.1.0",
   "description": "Client side accessibility error scanner.",
   "main": "dist/index-umd.js",
