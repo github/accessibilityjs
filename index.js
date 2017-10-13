@@ -31,7 +31,7 @@ export function scanForProblems(context, logError, options) {
     }
   }
 
-  for (const input of context.querySelectorAll('input:not([type=button]), textarea')) {
+  for (const input of context.querySelectorAll('input[type=text], input[type=url], input[type=search], input[type=number], textarea')) {
     // In case input.labels isn't supported by browser, find the control manually (IE)
     const inputLabel = input.labels ? input.labels[0] : input.closest('label') || document.querySelector(`label[for="${input.id}"]`)
     if (!inputLabel && !elementIsHidden(input) && !input.hasAttribute('aria-label')) {
