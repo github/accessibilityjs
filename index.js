@@ -1,4 +1,4 @@
-export function scanForProblems(context, logError) {
+export function scanForProblems(context, logError, options) {
   for (const img of context.querySelectorAll('img')) {
     if (!img.hasAttribute('alt')) {
       logError(new ImageWithoutAltAttributeError(img))
@@ -27,7 +27,7 @@ export function scanForProblems(context, logError) {
     const control = label.control || document.getElementById(label.getAttribute('for')) || label.querySelector('input')
 
     if (!control && !elementIsHidden(label)) {
-      logError(new LabelMissingControl(label), false)
+      logError(new LabelMissingControl(label))
     }
   }
 
@@ -38,18 +38,19 @@ export function scanForProblems(context, logError) {
       logError(new ElementWithoutLabelError(input))
     }
   }
+  if (options && options['ariaPairs']) {
+    for (const selector in options['ariaPairs']) {
+      const ARIAAttrsRequired =  options['ariaPairs'][selector]
+      for (const target of context.querySelectorAll(selector)) {
+        const missingAttrs = []
 
-  for (const selector in SelectorARIAPairs) {
-    const ARIAAttrsRequired = SelectorARIAPairs[selector]
-    for (const target of context.querySelectorAll(selector)) {
-      const missingAttrs = []
+        for (const attr of ARIAAttrsRequired) {
+          if (!target.hasAttribute(attr)) missingAttrs.push(attr)
+        }
 
-      for (const attr of ARIAAttrsRequired) {
-        if (!target.hasAttribute(attr)) missingAttrs.push(attr)
-      }
-
-      if (missingAttrs.length > 0) {
-        logError(new ARIAAttributeMissingError(target, missingAttrs.join(', ')))
+        if (missingAttrs.length > 0) {
+          logError(new ARIAAttributeMissingError(target, missingAttrs.join(', ')))
+        }
       }
     }
   }
@@ -108,11 +109,6 @@ function ARIAAttributeMissingError(element, attr) {
 }
 errorSubclass(ARIAAttributeMissingError)
 
-const SelectorARIAPairs = {
-  ".js-menu-target": ["aria-expanded", "aria-haspopup"],
-  ".js-details-target": ["aria-expanded"]
-}
-
 function elementIsHidden(element) {
   return element.closest('[aria-hidden="true"], [hidden], [style*="display: none"]') != null
 }
@@ -168,7 +164,7 @@ function selectors(element) {
   if (element.id) components.push(`#${element.id}`)
   if (element.classList) {
     for (const name of element.classList) {
-      if (name.match(/^js-/)) components.push(`'.${name}`)
+      if (name.match(/^js-/)) components.push(`.${name}`)
     }
   }
 
