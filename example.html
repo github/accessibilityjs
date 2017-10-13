@@ -36,6 +36,8 @@
       </div>
       <p>Button without text</p>
       <button type="button" class="abc js-menu-target" id="bbbb" aria-haspopup="true"><svg height="20" width="20"><circle cx="10" cy="10" r="10" fill="#000000"></circle></svg></button>
+      <p>Button should have aria-haspopup</p>
+      <button type="button" class="abc js-menu-target" id="bbbb">Menu target</button>
       <p>Link without href</p>
       <a>Link</a>
       <p>Image without alt</p>
@@ -48,6 +50,10 @@
         error.element.addEventListener('click', function () {
           alert([error.name, error.message].join('\n'))
         })
+      }, {
+        ariaPairs: {
+          '.js-menu-target': ['aria-haspopup']
+        }
       })
     </script>
   </body>
