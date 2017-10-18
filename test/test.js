@@ -1,4 +1,18 @@
 describe('scanForProblems should catch', () => {
+  it('html without lang', () => {
+    const html = makeElement('html', {"lang": "en"})
+    document.body.appendChild(html)
+
+    assert.exists(html.getAttribute('lang'), html)
+  })
+
+  it('html without lang value', () => {
+    const html = makeElement('html', {"lang": "en"})
+    document.body.appendChild(html)
+
+    assert.isNotEmpty(html.getAttribute('lang'), html)
+  })
+
   it('empty button', () => {
     const button = makeElement('button', {type: 'button'})
     document.body.appendChild(button)
