@@ -20,7 +20,7 @@ function logError(error) {
   }, {once: true})
 }
 
-document.addEventListener('ready', function() {
+document.addEventListener('DOMContentLoaded', function() {
   scanForProblems(document, logError)
 })
 ```
