@@ -45,7 +45,7 @@
     </div>
 
     <script type="text/javascript">
-      accessibilityjs.scanForProblems(document.body, function (error) {
+      var errors = accessibilityjs.scanForProblems(document.body, function (error) {
         error.element.style.outline = '5px solid red'
         error.element.addEventListener('click', function () {
           alert([error.name, error.message].join('\n'))
@@ -55,6 +55,8 @@
           '.js-menu-target': ['aria-haspopup']
         }
       })
+
+      console.log(errors)
     </script>
   </body>
 </html>
