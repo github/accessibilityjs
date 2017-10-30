@@ -127,7 +127,7 @@ function IframeWithoutScroll(element) {
   this.name = 'IframeWithoutScroll'
   this.stack = new Error().stack
   this.element = element
-  this.message = `Frame missing scroll on ${inspect(element)}`
+  this.message = `iframe missing scroll on ${inspect(element)}`
 }
 errorSubclass(IframeWithoutScroll)
 
