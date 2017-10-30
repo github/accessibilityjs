@@ -38,6 +38,13 @@ export function scanForProblems(context, logError, options) {
       logError(new InputMissingLabelError(input))
     }
   }
+
+  for (const fieldset of context.querySelectorAll('fieldset')) {
+    if(!fieldset.firstChild || fieldset.firstChild.nodeName !== 'LEGEND'){
+      logError(new FieldsetMissingLegend(fieldset))
+    }
+  }
+
   if (options && options['ariaPairs']) {
     for (const selector in options['ariaPairs']) {
       const ARIAAttrsRequired =  options['ariaPairs'][selector]
@@ -116,6 +123,14 @@ function ARIAAttributeMissingError(element, attr) {
   this.message = `Missing ${attr} attribute on ${inspect(element)}`
 }
 errorSubclass(ARIAAttributeMissingError)
+
+function FieldsetMissingLegend(element) {
+  this.name = 'FieldsetMissingLegend'
+  this.stack = new Error().stack
+  this.element = element
+  this.message = `Fieldset missing legend on ${inspect(element)}`
+}
+errorSubclass(FieldsetMissingLegend)
 
 function elementIsHidden(element) {
   return element.closest('[aria-hidden="true"], [hidden], [style*="display: none"]') != null
