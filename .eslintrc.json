@@ -1,6 +1,8 @@
 {
   "env": {
-    "node": true
+    "node": true,
+    "browser": true,
+    "amd": true
   },
   "extends": [
     "plugin:github/recommended",
