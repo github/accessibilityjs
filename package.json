@@ -11,7 +11,7 @@
     "prebuild": "npm run clean && mkdir dist",
     "prepublishOnly": "npm run build",
     "clean": "rm -rf dist",
-    "pretest": "eslint *.js && npm run build",
+    "pretest": "eslint index.js && npm run build",
     "test": "karma start ./test/karma.config.js",
     "build": "npm run build-esm && npm run build-umd",
     "build-esm": "BABEL_ENV=esm babel index.js -o dist/index-esm.js",
