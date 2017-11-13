@@ -1,8 +1,8 @@
 export function scanForProblems(context, errorCallback, options) {
   const errors = {}
 
-  const logError = err => {
-    const { name } = err
+  function logError(err) {
+    const {name} = err
 
     errors[name] = errors[name] || []
     errors[name].push(err)
