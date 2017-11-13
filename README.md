@@ -55,6 +55,8 @@ Internet Explorer and Edge require a polyfill for [`closest`](https://developer.
 
 ## Development
 
-- `npm install`
-- `npm test`
-- `npm run example`
+```bash
+> npm install
+> npm test
+> npm run example
+```
