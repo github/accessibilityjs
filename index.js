@@ -1,4 +1,15 @@
-export function scanForProblems(context, logError, options) {
+export function scanForProblems(context, errorCallback, options) {
+  const errors = {}
+
+  function logError(err) {
+    const {name} = err
+
+    errors[name] = errors[name] || []
+    errors[name].push(err)
+
+    errorCallback(err)
+  }
+
   for (const img of context.querySelectorAll('img')) {
     if (!img.hasAttribute('alt')) {
       logError(new ImageWithoutAltAttributeError(img))
@@ -58,6 +69,8 @@ export function scanForProblems(context, logError, options) {
       }
     }
   }
+
+  return errors
 }
 
 function errorSubclass(fn) {
