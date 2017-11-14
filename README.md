@@ -1,4 +1,4 @@
-# accessibilityjs
+# accessibilityjs ![build status](https://travis-ci.org/github/accessibilityjs.svg?branch=master)
 
 Client side accessibility error scanner.
 
