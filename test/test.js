@@ -41,6 +41,14 @@ describe('scanForProblems should catch', () => {
 
     assert.equal(button.getAttribute('data-error'), 'ARIAAttributeMissingError')
   })
+
+  it('fieldset without legend', () => {
+    const fieldset = makeElement('fieldset', {"id": "fieldsetid"})
+    document.body.appendChild(fieldset)
+    const button = makeElement('button')
+    document.getElementById('fieldsetid').appendChild(button)
+    assert.equal(fieldset.getAttribute('data-error'), 'FieldsetMissingLegend')
+  })
 })
 
 describe('scanForProblems should not catch', () => {
@@ -82,6 +90,14 @@ describe('scanForProblems should not catch', () => {
     document.body.appendChild(container)
     assert.notOk(label.getAttribute('data-error'))
     assert.notOk(input.getAttribute('data-error'))
+  })
+
+  it('fieldset with legend', () => {
+    const fieldset = makeElement('fieldset', {"id": "fieldsetid"})
+    document.body.appendChild(fieldset)
+    const legend = makeElement('legend')
+    document.getElementById('fieldsetid').appendChild(legend)
+    assert.equal(fieldset.getAttribute('data-error'), 'FieldsetMissingLegend')
   })
 })
 
