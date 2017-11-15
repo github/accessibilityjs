@@ -1,4 +1,4 @@
-# accessibilityjs
+# accessibilityjs ![build status](https://travis-ci.org/github/accessibilityjs.svg?branch=master)
 
 Client side accessibility error scanner.
 
@@ -56,6 +56,8 @@ Internet Explorer and Edge require a polyfill for [`closest`](https://developer.
 
 ## Development
 
-- `npm install`
-- `npm test`
-- `npm run example`
+```bash
+> npm install
+> npm test
+> npm run example
+```

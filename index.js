@@ -1,4 +1,15 @@
-export function scanForProblems(context, logError, options) {
+export function scanForProblems(context, errorCallback, options) {
+  const errors = {}
+
+  function logError(err) {
+    const {name} = err
+
+    errors[name] = errors[name] || []
+    errors[name].push(err)
+
+    errorCallback(err)
+  }
+
   for (const img of context.querySelectorAll('img')) {
     if (!img.hasAttribute('alt')) {
       logError(new ImageWithoutAltAttributeError(img))
@@ -31,9 +42,13 @@ export function scanForProblems(context, logError, options) {
     }
   }
 
-  for (const input of context.querySelectorAll('input[type=text], input[type=url], input[type=search], input[type=number], textarea')) {
+  for (const input of context.querySelectorAll(
+    'input[type=text], input[type=url], input[type=search], input[type=number], textarea'
+  )) {
     // In case input.labels isn't supported by browser, find the control manually (IE)
-    const inputLabel = input.labels ? input.labels[0] : input.closest('label') || document.querySelector(`label[for="${input.id}"]`)
+    const inputLabel = input.labels
+      ? input.labels[0]
+      : input.closest('label') || document.querySelector(`label[for="${input.id}"]`)
     if (!inputLabel && !elementIsHidden(input) && !input.hasAttribute('aria-label')) {
       logError(new InputMissingLabelError(input))
     }
@@ -47,7 +62,7 @@ export function scanForProblems(context, logError, options) {
 
   if (options && options['ariaPairs']) {
     for (const selector in options['ariaPairs']) {
-      const ARIAAttrsRequired =  options['ariaPairs'][selector]
+      const ARIAAttrsRequired = options['ariaPairs'][selector]
       for (const target of context.querySelectorAll(selector)) {
         const missingAttrs = []
 
@@ -61,6 +76,8 @@ export function scanForProblems(context, logError, options) {
       }
     }
   }
+
+  return errors
 }
 
 function errorSubclass(fn) {
@@ -157,7 +174,12 @@ function isText(value) {
 function accessibleText(node) {
   switch (node.nodeType) {
     case Node.ELEMENT_NODE:
-      if (isText(node.getAttribute('alt')) || isText(node.getAttribute('aria-label')) || isText(node.getAttribute('title'))) return true
+      if (
+        isText(node.getAttribute('alt')) ||
+        isText(node.getAttribute('aria-label')) ||
+        isText(node.getAttribute('title'))
+      )
+        return true
       for (let i = 0; i < node.childNodes.length; i++) {
         if (accessibleText(node.childNodes[i])) return true
       }
