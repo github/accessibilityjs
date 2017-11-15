@@ -55,7 +55,7 @@ export function scanForProblems(context, errorCallback, options) {
   }
 
   for (const fieldset of context.querySelectorAll('fieldset')) {
-    if(!fieldset.firstChild || fieldset.firstChild.nodeName !== 'LEGEND'){
+    if (!fieldset.firstChild || fieldset.firstChild.nodeName !== 'LEGEND') {
       logError(new FieldsetMissingLegend(fieldset))
     }
   }
