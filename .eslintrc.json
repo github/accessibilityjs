@@ -1,0 +1,11 @@
+{
+  "env": {
+    "browser": true,
+    "amd": true
+  },
+  "extends": [
+    "plugin:github/recommended",
+    "plugin:github/es6",
+    "plugin:github/browser"
+  ]
+}
