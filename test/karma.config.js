@@ -19,7 +19,7 @@ module.exports = function(config) {
         base: 'Firefox',
         flags: ['-headless'],
         displayName: 'HeadlessFirefox'
-      },
+      }
     }
   })
 }
