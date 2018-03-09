@@ -6,11 +6,15 @@ module.exports = function(config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    browsers: ['ChromeHeadless', 'FirefoxHeadless'],
+    browsers: ['ChromeHeadlessNoSandbox', 'FirefoxHeadless'],
     autoWatch: false,
     singleRun: true,
     concurrency: Infinity,
     customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
+      },
       FirefoxHeadless: {
         base: 'Firefox',
         flags: ['-headless'],
