@@ -33,6 +33,7 @@ describe('scanForProblems should catch', () => {
     document.body.appendChild(label)
 
     assert.equal(label.getAttribute('data-error'), 'LabelMissingControlError')
+    assert.include(label.getAttribute('data-error-message'), 'Label missing control on "label"')
   })
 
   it('element with attributes missing', () => {
@@ -40,6 +41,14 @@ describe('scanForProblems should catch', () => {
     document.body.appendChild(button)
 
     assert.equal(button.getAttribute('data-error'), 'ARIAAttributeMissingError')
+    assert.include(button.getAttribute('data-error-message'), 'Missing aria-expanded, aria-haspopup attribute on "button.js-menu-target"')
+  })
+
+  it('inspects element id and classes', () => {
+    const button = makeElement('button', {type: 'button', id: 'btn', class: 'a js-menu-target b js-quick-submit'}, 'Button')
+    document.body.appendChild(button)
+
+    assert.include(button.getAttribute('data-error-message'), '"button#btn.js-menu-target.js-quick-submit"')
   })
 })
 
