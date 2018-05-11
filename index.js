@@ -192,7 +192,7 @@ function inspect(element) {
 function selectors(element) {
   const components = [element.nodeName.toLowerCase()]
   if (element.id) components.push(`#${element.id}`)
-  if (element.hasAttribute('class')) {
+  if (typeof element.hasAttribute === 'function' && element.hasAttribute('class')) {
     for (const name of element.getAttribute('class').split(/\s+/)) {
       if (name.match(/^js-/)) components.push(`.${name}`)
     }
