@@ -10,6 +10,18 @@ export function scanForProblems(context, errorCallback, options) {
     errorCallback(err)
   }
 
+  const html = context.querySelector('html')
+
+  if (!html.hasAttribute('lang')) {
+    logError(new HtmlWithoutLangAttributeError(html))
+  } else {
+    const getLangVal = html.getAttribute('lang')
+
+    if (getLangVal === '' || getLangVal === null) {
+      logError(new HtmlWithoutLangValueError(html))
+    }
+  }
+
   for (const img of context.querySelectorAll('img')) {
     if (!img.hasAttribute('alt')) {
       logError(new ImageWithoutAltAttributeError(img))
@@ -77,6 +89,22 @@ function errorSubclass(fn) {
   fn.prototype = new Error()
   fn.prototype.constructor = fn
 }
+
+function HtmlWithoutLangAttributeError(element) {
+  this.name = 'HtmlWithoutLangAttributeError'
+  this.stack = new Error().stack
+  this.element = element
+  this.message = `Missing lang attribute on ${inspect(element)}`
+}
+errorSubclass(HtmlWithoutLangAttributeError)
+
+function HtmlWithoutLangValueError(element) {
+  this.name = 'HtmlWithoutLangValueError'
+  this.stack = new Error().stack
+  this.element = element
+  this.message = `Missing lang value on ${inspect(element)}`
+}
+errorSubclass(HtmlWithoutLangValueError)
 
 function ImageWithoutAltAttributeError(element) {
   this.name = 'ImageWithoutAltAttributeError'

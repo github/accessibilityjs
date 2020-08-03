@@ -27,6 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 List of errors:
 
+- `HtmlWithoutLangAttributeError`
+- `HtmlWithoutLangValueError`
 - `ImageWithoutAltAttributeError`
 - `ElementWithoutLabelError`
 - `LinkWithoutLabelOrRoleError`
