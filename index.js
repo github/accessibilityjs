@@ -53,6 +53,12 @@ export function scanForProblems(context, errorCallback, options) {
       logError(new InputMissingLabelError(input))
     }
   }
+
+  for (const iframe of context.querySelectorAll('iframe')) {
+    if (iframe.hasAttribute('scrolling') && iframe.getAttribute('scrolling') === 'no') {
+      logError(new IframeWithoutScroll(iframe))
+    }
+  }
   if (options && options['ariaPairs']) {
     for (const selector in options['ariaPairs']) {
       const ARIAAttrsRequired = options['ariaPairs'][selector]
@@ -133,6 +139,14 @@ function ARIAAttributeMissingError(element, attr) {
   this.message = `Missing ${attr} attribute on ${inspect(element)}`
 }
 errorSubclass(ARIAAttributeMissingError)
+
+function IframeWithoutScroll(element) {
+  this.name = 'IframeWithoutScroll'
+  this.stack = new Error().stack
+  this.element = element
+  this.message = `iframe missing scroll on ${inspect(element)}`
+}
+errorSubclass(IframeWithoutScroll)
 
 function elementIsHidden(element) {
   return element.closest('[aria-hidden="true"], [hidden], [style*="display: none"]') != null

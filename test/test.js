@@ -50,6 +50,13 @@ describe('scanForProblems should catch', () => {
 
     assert.include(button.getAttribute('data-error-message'), '"button#btn.js-menu-target.js-quick-submit"')
   })
+
+  it('iframe without scroll', () => {
+    const iframe = makeElement('iframe', {"scrolling": "no"})
+    document.body.appendChild(iframe)
+
+    assert.equal(iframe.getAttribute('data-error'), 'IframeWithoutScroll')
+  })
 })
 
 describe('scanForProblems should not catch', () => {
@@ -91,6 +98,13 @@ describe('scanForProblems should not catch', () => {
     document.body.appendChild(container)
     assert.notOk(label.getAttribute('data-error'))
     assert.notOk(input.getAttribute('data-error'))
+  })
+
+  it('iframe with scroll', () => {
+    const iframe = makeElement('iframe')
+    document.body.appendChild(iframe)
+
+    assert.notOk(iframe.getAttribute('data-error'))
   })
 })
 

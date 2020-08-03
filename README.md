@@ -34,6 +34,7 @@ List of errors:
 - `InputMissingLabelError`
 - `ButtonWithoutLabelError`
 - `ARIAAttributeMissingError`
+- `IframeWithoutScroll`
 
 ## Scenario
 
